@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="DatabaseApp">
+        
+    <wb-module deploy-name="StudentGradingSystemServlet">
+                
         <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="DatabaseApp"/>
-        <property name="java-output-path" value="/DatabaseApp/build/classes"/>
+                
+        <property name="java-output-path" value="/StudentGradingSystemServlet/build/classes"/>
+        <property name="context-root" value="StudentGradingSystemServlet"/>
+            
     </wb-module>
+    
 </project-modules>
