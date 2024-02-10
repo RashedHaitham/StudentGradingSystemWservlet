@@ -53,7 +53,6 @@
             <input type="hidden" value="UPDATE" name="command">
             <input type="hidden" value="${name}" name="name">
             <input type="hidden" value="${Id}" name="Id">
-
             <div class="form-outline mb-3">
             <input value="${Id}" class="form-control" type="text" name="newId" required>            
             <label class="form-label" for="newId">ID</label>
@@ -68,11 +67,16 @@
                         </c:choose>
                     </label>
                 </div>
-			
+			<input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
             <button class="btn btn-warning mb-4" type="submit">Save changes for ${name}</button>
-             <p><a href="<%=request.getContextPath()%>/crud?role=ADMIN&table=${table}">back to list</a></p>
             
         </form>
+        <form action="<%=request.getContextPath()%>/crud" method="post">
+              <input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
+                <input type="hidden" name="role" value="ADMIN">
+                <input type="hidden" name="table" value="${table}">
+                <button type="submit" class="btn btn-link">back to list</button>
+            </form>
     </div>
 </div>
 </div>

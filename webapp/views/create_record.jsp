@@ -51,7 +51,7 @@
         
         <form action="<%=request.getContextPath()%>/crud" method="post">
             
-
+            <input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
          	<input type="hidden" value="ADD" name="command">        
             <input type="hidden" name="table" value="${table}">
             <% if (!"courses".equals(table)) { %>
@@ -83,8 +83,13 @@
             </div>
             <% } %>
             <button class="btn btn-primary mb-4" type="submit">Add Record</button>
-            <p><a href="<%=request.getContextPath()%>/crud?role=ADMIN&table=${table}">back to list</a></p>
-        </form>
+              </form>
+              <form action="<%=request.getContextPath()%>/crud" method="post">
+              <input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
+                <input type="hidden" name="role" value="ADMIN">
+                <input type="hidden" name="table" value="${table}">
+                <button type="submit" class="btn btn-link">back to list</button>
+            </form>
     </div>
     
     

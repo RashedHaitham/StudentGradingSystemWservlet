@@ -35,6 +35,8 @@ public class AdminControllerServlet extends HttpServlet {
              httpRequest.getRequestDispatcher("views/adminLogin.jsp").forward(request, response);
              return;
          }	
+         session.setAttribute("csrfToken", requestCsrfToken);
+
 		
 		try {
 			String theCommand=request.getParameter("command");
@@ -84,7 +86,7 @@ public class AdminControllerServlet extends HttpServlet {
 	    }
 	    if(newId.equals(idToUpdate)) {
 		    db.updateRecord(table, secondaryKeyColumn, primaryKeyColumn, idToUpdate, newUsername);
-	        response.sendRedirect(request.getContextPath() + "/crud?role=ADMIN&table="+table); // Redirect to prevent double submission
+			listRecord(request,response);
 	        return;
 	    }
 	    if (db.isIdExists(newId, table)) {
@@ -97,7 +99,10 @@ public class AdminControllerServlet extends HttpServlet {
 	    boolean isUpdated = db.updateRecord(table, primaryKeyColumn, primaryKeyColumn, idToUpdate, newId);
 
 	    if (isUpdated) {
-	        response.sendRedirect(request.getContextPath() + "/crud?role=ADMIN&table="+table); // Redirect to prevent double submission
+			listRecord(request,response);
+
+	      //  response.sendRedirect("views/crud.jsp");
+	      //  response.sendRedirect(request.getContextPath() + "/crud"); // Redirect to prevent double submission
 	    } else {
 	        forwardWithError(request, response, table, name, idToUpdate, "No record was found with the specified ID.");
 	    }

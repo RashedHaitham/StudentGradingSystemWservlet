@@ -62,12 +62,15 @@
            		<c:param name="Id" value="<%=row[0]%>"/>
            		<c:param name="name" value="<%=row[1]%>"/>
     			<c:param name="table" value="${table}"/>
+  				<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
           </c:url>
           
           <c:url var="DelLink" value="crud">
            		<c:param name="command" value="DELETE"/>
            		<c:param name="Id" value="<%=row[0]%>"/>
    				<c:param name="table" value="${table}"/>
+   			<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
+   				
           </c:url>
           
  
