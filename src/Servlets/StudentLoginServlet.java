@@ -58,6 +58,7 @@ public class StudentLoginServlet extends HttpServlet {
         
         String csrfToken = UUID.randomUUID().toString();
         session.setAttribute("csrfToken", csrfToken);
+        session.setAttribute("role", "student");
 
         int userId = Integer.parseInt(userIdStr);
         request.setAttribute("user_id", userId);

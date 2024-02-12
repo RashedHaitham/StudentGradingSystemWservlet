@@ -59,7 +59,8 @@ public class InstructorLoginServlet extends HttpServlet {
         
         String csrfToken = UUID.randomUUID().toString();
         session.setAttribute("csrfToken", csrfToken);
-        
+        session.setAttribute("role", "instructor");
+
         RoleSessionManager.incrementSessionCounter(Role.INSTRUCTOR);
         request.setAttribute("user_id", userId);
         request.setAttribute("username", db.getDbUsername(role, userId));

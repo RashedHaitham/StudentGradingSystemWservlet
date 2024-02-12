@@ -1,6 +1,9 @@
 package Servlets;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.annotation.HttpConstraint;
+
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 
 import java.io.IOException;
@@ -9,6 +12,7 @@ import java.util.*;
 import Database.Database;
 import Util.PasswordHashing;
 import jakarta.servlet.http.*;
+
 @WebServlet(urlPatterns = "/crud")
 public class AdminControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +29,15 @@ public class AdminControllerServlet extends HttpServlet {
 		  HttpServletRequest httpRequest = (HttpServletRequest) request;
 	        
 	      HttpSession session = httpRequest.getSession(false);
+	      
+	      
+	   /*   String userRole = (session != null) ? (String) session.getAttribute("role") : null;
+	      
+	      if (!"admin".equals(userRole)) {
+	          response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+	          return;
+	      }
+	      */
 		
 		 String sessionCsrfToken = (session != null) ? (String) session.getAttribute("csrfToken") : null;
          String requestCsrfToken = request.getParameter("csrfToken");

@@ -47,6 +47,7 @@ public class AdminLoginServlet extends HttpServlet {
             session.setAttribute("logged", true);
             String csrfToken = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", csrfToken);
+            session.setAttribute("role", "admin");
             RoleSessionManager.incrementSessionCounter(Role.ADMIN);
             request.setAttribute("password", password);
             request.getRequestDispatcher("views/admin_dashboard.jsp").forward(request, response);

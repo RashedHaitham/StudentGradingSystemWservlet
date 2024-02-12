@@ -31,4 +31,47 @@
     <url-pattern>/authRedirectFilter</url-pattern>
   </servlet-mapping>
   
+  
+<filter>
+  <filter-name>AdminAuthorizationFilter</filter-name>
+  <filter-class>Security.AdminAuthorizationFilter</filter-class>
+</filter>
+<filter-mapping>
+  <filter-name>AdminAuthorizationFilter</filter-name>
+  <url-pattern>/crud</url-pattern> 
+  <url-pattern>/addRecord</url-pattern>
+</filter-mapping>
+
+<filter>
+  <filter-name>InstructorAuthorizationFilter</filter-name>
+  <filter-class>Security.InstructorAuthorizationFilter</filter-class>
+</filter>
+<filter-mapping>
+  <filter-name>InstructorAuthorizationFilter</filter-name>
+  <url-pattern>/manage</url-pattern> <!-- Apply this filter to all instructor-related paths -->
+</filter-mapping>
+
+<!--  
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Unprotected Pages</web-resource-name>
+        <url-pattern>views/adminLogin.jsp</url-pattern> 
+        <url-pattern>views/instructorLogin.jsp</url-pattern> 
+        <url-pattern>views/studentLogin.jsp</url-pattern> 
+    </web-resource-collection>
+</security-constraint>
+
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Protected Area</web-resource-name>
+        <url-pattern>/crud</url-pattern> 
+        <url-pattern>/addRecord</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>admin</role-name>
+    </auth-constraint>
+</security-constraint>
+
+  -->
+  
 </web-app>

@@ -16,9 +16,7 @@ import Database.Database;
 import Model.Role;
 import Model.StudentGrades;
 
-/**
- * Servlet implementation class InstructorControllerServlet
- */
+
 @WebServlet(urlPatterns = "/manage")
 public class InstructorAndStudentControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +35,6 @@ public class InstructorAndStudentControllerServlet extends HttpServlet {
 	     Role role = Role.INSTRUCTOR;	        
 
        if (sessionCsrfToken == null || !sessionCsrfToken.equals(requestCsrfToken)) {
-           // CSRF token validation failed, handle error
            httpRequest.setAttribute("errorMessage", "Please, login to access that page.");
            if(role==Role.INSTRUCTOR)
            httpRequest.getRequestDispatcher("views/instructorLogin.jsp").forward(request, response);
