@@ -47,26 +47,34 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${stds}" var="entry">
+                        <c:url var="DelGrade" value="manage">
+					           		<c:param name="command" value="DGRADE"/>
+					           		<c:param name="courseId" value="${course_id}"/>
+					           		<c:param name="std_id" value="${entry.key}"/>
+					         		<c:param name="user_id" value="${user_id}"/>
+					                <c:param name="role" value="INSTRUCTOR"/>	
+									<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
+					          </c:url>
                             <tr>
                                 <td>${entry.value.studentId}</td>
-                                <td>${entry.value.studentName}</td>
+                                <td>${entry.value.studentName}</td>  
+                                <form action="<%=request.getContextPath()%>/manage" method="post">
                                 <td>
-                                    <form action="<%=request.getContextPath()%>/manage" method="post">
                                         <input type="hidden" name="user_id" value="${user_id}"/>
                                         <input type="hidden" name="role" value="INSTRUCTOR"/>
                                         <input type="hidden" name="command" value="GRADE"/>
-                                                        <input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
-                                        
+                                        <input type="hidden" name="csrfToken" value="<%=session.getAttribute("csrfToken")%>">
                                         <input type="hidden" name="student_id" value="${entry.value.studentId}"/>
                                         <input type="hidden" name="course_id" value="${course_id}"/>
-                                        <input class="text-center" style="width:5rem" type="number" step="0.1" name="grade" value="${entry.value.courseGrades[0].grade}" class="form-control"/>
+                                        <input class="text-center " style="width:5rem" type="number" step="0.1" name="grade" value="${entry.value.courseGrades[0].grade}"/>
                                 </td>
                                 <td>
                                     <button type='submit' class='btn btn-${entry.value.courseGrades[0].grade != "" ? "success" : "info"} btn-sm'>
                                         ${entry.value.courseGrades[0].grade != "" ? "Update" : "Add"}
-                                    </button>
-                                    </form>
+                                    </button>  
+                                     <a href="${DelGrade}" class="btn btn-danger btn-sm ">Delete</a>
                                 </td>
+                                </form>
                             </tr>
                         </c:forEach>
                     </tbody>

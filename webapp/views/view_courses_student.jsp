@@ -37,8 +37,12 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+        <c:if test="${not empty message}">
+               <p class="text-center alert alert-success" >${message}</p>
+            </c:if>
             <div class="d-flex justify-content-center">
-				<table class="table align-middle mb-0 bg-white">
+            
+<table class="table align-middle mb-0 bg-white">
   <thead class="bg-light">
     <tr class="text-center">
       <th>Course ID</th>
@@ -49,6 +53,13 @@
   <tbody>
     <c:forEach items="${courses.entrySet()}" var="course">
         <tr class="text-center">
+        <c:url var="Drop" value="manage">
+				<c:param name="command" value="DROP"/>
+				<c:param name="user_id" value="${user_id}"/>
+				<c:param name="role" value="STUDENT"/>
+				<c:param name="courseId" value="${course.key}"/>
+				<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
+		</c:url>
             <td>${course.key}</td>
             <td>${course.value}</td>
             <td>
@@ -63,12 +74,16 @@
                 </c:forEach>
                 <c:if test="${not foundGrade}">
                     <span class="badge badge-secondary rounded-pill d-inline">Not Graded</span>
+                    <a type="button" class="btn btn-link btn-sm btn-rounded"  href="${Drop}">
+				        Drop
+			        </a>
                 </c:if>
             </td>
         </tr>
     </c:forEach>
   </tbody>
 </table>
+
 
             </div>            
         </div>

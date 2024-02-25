@@ -53,8 +53,11 @@ public class InstructorAndStudentControllerServlet extends HttpServlet {
 			case "LOAD":loadRecord(request,response);break;
 			case "ANALYSIS":AnalysisRecord(request,response);break;
 			case "GRADE":GradeStudent(request,response);break;
+			case "DGRADE":DeleteGrade(request,response);break;
 			case "LOADC":LoadCourse(request,response);break;
 			case "ENROLL":EnrollCourse(request,response);break;
+			case "DROP":DropCourse(request,response);break;
+
 
 			default:listRecord(request,response);break;
 
@@ -65,6 +68,30 @@ public class InstructorAndStudentControllerServlet extends HttpServlet {
 	}
 
 	
+	private void DeleteGrade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String StdId= request.getParameter("std_id");	
+		String course_id = request.getParameter("courseId");
+		db.deleteGrade(StdId, course_id);
+        request.setAttribute("message", "Successfully Deleted the Grade!");
+        
+        request.setAttribute("user_id", request.getParameter("user_id"));
+        request.setAttribute("role", Role.INSTRUCTOR);
+        listRecord(request,response);	
+	}
+
+
+	private void DropCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId= request.getParameter("user_id");
+		String course_id = request.getParameter("courseId");
+		String role = request.getParameter("role");
+
+		db.DropEnrolledCourse(userId,course_id,role);
+        request.setAttribute("message", "Successfully Dropped the course!");
+		listRecord(request,response);
+
+	}
+
+
 	private void EnrollCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userId = Integer.parseInt(request.getParameter("user_id"));
         request.setAttribute("user_id", userId);
@@ -82,8 +109,8 @@ public class InstructorAndStudentControllerServlet extends HttpServlet {
 
         String tableName = role == Role.STUDENT ? "student_course" : "instructor_course";
         boolean isEnrolled = db.enrollCourse(userId, role, tableName, courseId);
-        Map<Integer, String> availableCourses = db.getAvailableCourses(userId, role); // Add this line
-        request.setAttribute("availableCourses", availableCourses); // And this line
+        Map<Integer, String> availableCourses = db.getAvailableCourses(userId, role); 
+        request.setAttribute("availableCourses", availableCourses);
         if (isEnrolled) {
             request.setAttribute("message", "Successfully enrolled in the course!");
         } else {

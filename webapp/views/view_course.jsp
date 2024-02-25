@@ -37,7 +37,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+        <c:if test="${not empty message}">
+               <p class="text-center alert alert-success" >${message}</p>
+            </c:if>
             <div class="d-flex justify-content-center">
+             
                 <table class="table table-responsive text-center">
                     <thead>
                         <tr>
@@ -70,22 +74,34 @@
 									<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
 					          </c:url>
 					          
+					          <c:url var="Drop" value="manage">
+					           		<c:param name="command" value="DROP"/>
+					           		<c:param name="user_id" value="${user_id}"/>
+					           		<c:param name="role" value="INSTRUCTOR"/>
+					       			<c:param name="courseId" value="${entry.key}"/>
+									<c:param name="csrfToken" value="${sessionScope.csrfToken}" />
+					          </c:url>
+					          
                                 <td>${entry.key}</td>
                                 <td>${entry.value}</td>
                                 <c:if test="${not empty studentsCount}">
                                     <td>${studentsCount[entry.key]}</td>
                                 </c:if>
-                                <td>
+                                <td><div class="text-center">
                                 <c:if test="${not empty studentsCount}">
-			                        <div class="text-center">
+			                        
 								        <a type="button" class="btn btn-link btn-sm btn-rounded"  href="${GradeLink}">
 								          Grade Students
 								        </a> |  
 								        <a type="button" class="btn btn-link btn-sm btn-rounded"  href="${AnalysisLink}">
 								          View Analysis
 								        </a>
-							        </div>
+							        
                                 </c:if>
+                                |
+                                 <a type="button" class="btn btn-link btn-sm btn-rounded"  href="${Drop}">
+									Drop
+								</a></div>
                                 </td>
                             </tr>
                         </c:forEach>

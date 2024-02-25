@@ -288,18 +288,6 @@ public class Database {
         }
         return false;
     }
-
-    /*public boolean updateRecord(String tableName, String columnToUpdate,
-                                String primaryKeyColumn, String idToUpdate, String newValue) {
-        String query = "UPDATE " + tableName + " SET " + columnToUpdate + " = ? WHERE " + primaryKeyColumn + " = ?";
-        try {
-            int rowsUpdated = executeUpdate(query, newValue, idToUpdate);
-            return rowsUpdated > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }*/
     
     public boolean updateRecord(String tableName, String columnToUpdate,
             String primaryKeyColumn, String idToUpdate, String newValue) {
@@ -445,6 +433,21 @@ private Map<String, String> getRelatedTables(String tableName, String primaryKey
             return false;
         }
     }
+    
+    public boolean deleteGrade(String student_id, String course_id) {
+        String deleteQuery = null;
+            deleteQuery = "DELETE FROM grades WHERE student_id = ? AND course_id=?";
+            System.out.print(student_id+" "+course_id);
+        try (Connection ignored = getDatabaseConnection()) {
+            int rowsDeleted = executeUpdate(deleteQuery, student_id,course_id);
+            if(rowsDeleted == 0)
+                return true;
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public boolean deleteEnrolledCourse(String userId, String userType) {
         String deleteQuery = null;
@@ -462,6 +465,24 @@ private Map<String, String> getRelatedTables(String tableName, String primaryKey
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public boolean DropEnrolledCourse(String userId, String courseId,String user) {
+    	 String deleteQuery = null;
+         if (user.equals("STUDENT")) {
+             deleteQuery = "DELETE FROM student_course WHERE student_id = ? AND course_id = ?";
+         } else if (user.equals("INSTRUCTOR")) {
+             deleteQuery = "DELETE FROM instructor_course WHERE instructor_id = ? AND course_id = ?";
+         }
+         try (Connection ignored = getDatabaseConnection()) {
+             int rowsDeleted = executeUpdate(deleteQuery, userId,courseId);
+             if(rowsDeleted == 0)
+                 return true;
+             return rowsDeleted > 0;
+         } catch (SQLException e) {
+             e.printStackTrace();
+             return false;
+         }
     }
 
     public boolean enrollCourse(int userId, Role role, String tableName, String courseId) {

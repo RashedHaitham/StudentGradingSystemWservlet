@@ -51,7 +51,9 @@
   </div>
 </header></header>
 <div class="container">
- 
+  <c:if test="${not empty message}">
+               <p class="text-center alert alert-success" >${message}</p>
+            </c:if>
 
     <c:choose>
         <c:when test="${not empty availableCourses}">
